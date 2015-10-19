@@ -1,0 +1,57 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+*, *:after, *:before
+{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+body
+{
+
+    font-family: 'Open Sans', sans-serif;
+    overflow-x: hidden;
+    font-weight: normal;
+    color:#666666;
+    font-size: 16px;
+    line-height: 24px;
+}
+h1, h2, h3, h4, h5
+{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: lighter;
+    color: #000;
+}
+/* === Images === */
+img
+{
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+/* === Links === */
+a
+{
+    color:#000;
+    text-decoration: none;
+}
+a:focus
+{
+    outline: none
+}
+a:hover
+{
+    text-decoration: none;
+    color:#000;
+}
+/* === Paragraf Elements === */
+p a:hover, span a:hover, h5 a:hover
+{
+    text-decoration: none
+}
+p, ul, ol
+{
+    margin-bottom: 1.5em
+}
