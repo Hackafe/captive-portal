@@ -17,6 +17,7 @@ body
     color:#666666;
     font-size: 16px;
     line-height: 24px;
+    background: #F9F9F9;
 }
 h1, h2, h3, h4, h5
 {
@@ -54,4 +55,11 @@ p a:hover, span a:hover, h5 a:hover
 p, ul, ol
 {
     margin-bottom: 1.5em
+}
+
+/* === Header === */
+.header{
+    background: #fff;
+    padding: 20px 0;
+    border-bottom: 1px solid #E8E8E8;
 }
