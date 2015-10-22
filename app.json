@@ -1,0 +1,6 @@
+{
+  "name": "Hackafe Captive Portal",
+  "description": "Captive portal for Hackafe network",
+  "repository": "https://github.com/Hackafe/captive-portal",
+  "keywords": ["hackafe", "captive"]
+}

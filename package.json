@@ -1,0 +1,31 @@
+{
+  "name": "hackafe-captive-portal",
+  "version": "0.0.1",
+  "description": "Captive portal for Hackafe network",
+  "devDependencies": {
+    "live-reload": "latest",
+    "parallelshell": "latest"
+  },
+  "scripts": {
+    "start": "http-server $PWD/public",
+    "serve": "parallelshell 'npm run livereload' 'npm start'",
+    "livereload": "live-reload --port 9091 public/",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "env": "env"
+  },
+  "dependencies": {
+    "http-server": "^0.8.5"
+  },
+  "engines": {
+    "node": "0.12.7"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Hackafe/captive-portal"
+  },
+  "keywords": [
+    "hackafe",
+    "captive"
+  ],
+  "license": "MIT"
+}
