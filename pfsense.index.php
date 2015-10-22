@@ -1,6 +1,6 @@
 <?php
 
-  if ($content = @fopen('http://captive.hama.hackafe.org/', 'r')) {
+  if ($content = @fopen('http://192.168.1.3/', 'r')) {
     @fpassthru($content);
     return;
   }
