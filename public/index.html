@@ -1,16 +1,36 @@
 <!DOCTYPE html>
 <html class="no-js" lang="" ng-app="app" ng-controller="MainController as app">
 <head>
+    <script>
+        (function () {
+            function submitFormAjax() {
+                var xmlhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4 && (xmlhttp.status == 0 || xmlhttp.status == 405)) {
+                        if (!location.search.match(/unlocked=1/))
+                            location.replace(location+(location.search?"&":"?")+"unlocked=1");
+                    }
+                };
+
+                var form = document.getElementById('unlock_form');
+                var action = form.action;
+
+                xmlhttp.open("POST", form.action, true);
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xmlhttp.send("redirurl=/&accept=1");
+            }
+
+            submitFormAjax();
+        })();
+    </script>
+
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Hackafe</title>
     <meta name="description" content="Plovdiv's hackerspace">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        form {
-            display: inline;
-        }
-
         [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
             display: none !important;
         }
@@ -76,32 +96,6 @@
         </div>
     </div>
 </div>
-<script>
-    (function () {
-        function submitFormAjax() {
-            var xmlhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
-
-            xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState == 4 && (xmlhttp.status == 0 || xmlhttp.status == 405)) {
-                    var pre = document.getElementById('enable_internet');
-                    if (pre) pre.remove();
-                    var post = document.getElementById('internet_enabled');
-                    if (post) post.style.display = '';
-                    location.reload(false);
-                }
-            };
-
-            var form = document.getElementById('unlock_form');
-            var action = form.action;
-
-            xmlhttp.open("POST", form.action, true);
-            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xmlhttp.send("redirurl=/&accept=1");
-        }
-
-        submitFormAjax();
-    })();
-</script>
 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"
       integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw=="
       crossorigin="anonymous">
