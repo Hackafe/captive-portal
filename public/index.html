@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html class="no-js" lang="" ng-app="app" ng-controller="MainController as app">
 <head>
+    <script>
+        (function () {
+            function submitFormAjax() {
+                var xmlhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4 && (xmlhttp.status == 0 || xmlhttp.status == 200 || xmlhttp.status == 405)) {
+                        if (!location.search.match(/unlocked=1/))
+                            location.replace(location + (location.search ? "&" : "?") + "unlocked=1");
+                    }
+                };
+
+                xmlhttp.open("POST", "/", true);
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xmlhttp.send("redirurl=/&accept=1");
+            }
+
+            submitFormAjax();
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Hackafe</title>
@@ -13,26 +33,6 @@
     </style>
 </head>
 <body>
-<script>
-    (function () {
-        function submitFormAjax() {
-            var xmlhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
-
-            xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState == 4 && (xmlhttp.status == 0 || xmlhttp.status == 405)) {
-                    if (!location.search.match(/unlocked=1/))
-                        location.replace(location + (location.search ? "&" : "?") + "unlocked=1");
-                }
-            };
-
-            xmlhttp.open("POST", "/", true);
-            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xmlhttp.send("redirurl=/&accept=1");
-        }
-
-        submitFormAjax();
-    })();
-</script>
 <div class="jumbotron">
     <div class="container">
         <img width="300" height="80" title="" alt=""
