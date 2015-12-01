@@ -1,27 +1,6 @@
 <!DOCTYPE html>
 <html class="no-js" lang="" ng-app="app" ng-controller="MainController as app">
 <head>
-    <script>
-        (function () {
-            function submitFormAjax() {
-                var xmlhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
-
-                xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4 && (xmlhttp.status == 0 || xmlhttp.status == 405)) {
-                        if (!location.search.match(/unlocked=1/))
-                            location.replace(location+(location.search?"&":"?")+"unlocked=1");
-                    }
-                };
-
-                xmlhttp.open("POST", "/", true);
-                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xmlhttp.send("redirurl=/&accept=1");
-            }
-
-            submitFormAjax();
-        })();
-    </script>
-
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Hackafe</title>
@@ -34,6 +13,26 @@
     </style>
 </head>
 <body>
+<script>
+    (function () {
+        function submitFormAjax() {
+            var xmlhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && (xmlhttp.status == 0 || xmlhttp.status == 405)) {
+                    if (!location.search.match(/unlocked=1/))
+                        location.replace(location + (location.search ? "&" : "?") + "unlocked=1");
+                }
+            };
+
+            xmlhttp.open("POST", "/", true);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send("redirurl=/&accept=1");
+        }
+
+        submitFormAjax();
+    })();
+</script>
 <div class="jumbotron">
     <div class="container">
         <img width="300" height="80" title="" alt=""
@@ -162,7 +161,7 @@
                             $scope.getFb = function (card) {
                                 card.fb = card.fb || {};
                                 if (card.fb.processed) return card.fb;
-                                card.fb.match = card.desc?card.desc.match(/((https?:)?\/\/(www.)?facebook.com\/events\/\d+)/i):null;
+                                card.fb.match = card.desc ? card.desc.match(/((https?:)?\/\/(www.)?facebook.com\/events\/\d+)/i) : null;
                                 if (card.fb.match)
                                     card.fb.url = card.fb.match[0];
                                 card.fb.processed = true;
