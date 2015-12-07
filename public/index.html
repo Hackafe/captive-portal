@@ -1,26 +1,6 @@
 <!DOCTYPE html>
 <html class="no-js" lang="" ng-app="app" ng-controller="MainController as app">
 <head>
-    <script>
-        (function () {
-            function submitFormAjax() {
-                var xmlhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
-
-                xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4 && (xmlhttp.status == 0 || xmlhttp.status == 200 || xmlhttp.status == 405)) {
-                        if (!location.search.match(/unlocked=1/))
-                            location.replace(location + (location.search ? "&" : "?") + "unlocked=1");
-                    }
-                };
-
-                xmlhttp.open("POST", "/", true);
-                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xmlhttp.send("redirurl=/&accept=1");
-            }
-
-            submitFormAjax();
-        })();
-    </script>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Hackafe</title>
@@ -49,148 +29,16 @@
             with technology, meet and work on their projects, and learn from each other.
         </p>
 
-        <p style="display:none">Hackafe е клуб/общност на хора, занимаващи се с високи технологии - програмиране,
-            хардуер, графичен дизайн,
-            онлайн бизнес. Тук се провеждат различни събития, като семинари, работилници, лекции, обучения, човъркане на
-            електронни устройства, или просто писане на код за забавление или упражнение.</p>
-
-        <p style="display:none">Hackafe е и споделено работно пространство, където всеки член на общността може да
-            изпозлва достъп до интернет,
-            стол и бюро, за да свърши своята работа.</p>
+        <p>Please wait while we enable the internet for you...</p>
     </div>
 </div>
 
-<div ng-if="false">
-    <div id="enable_internet">
-        <p>
-
-        <form id="unlock_form" method="post" action="$PORTAL_ACTION$">
-            <input name="redirurl" type="hidden" value="$PORTAL_REDIRURL$">
-            <input name="accept" type="hidden" value="1">
-            <input type="submit" value="Continue">
-        </form>
-        to Internet!
-        </p>
-    </div>
-    <div id="internet_enabled" style="display:none">
-        <p>Internet is enabled for your device.</p>
-    </div>
-</div>
-<div ng-cloak class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Events</h2>
-            <card-list cards="labels.events.cards"></card-list>
-        </div>
-        <div class="col-md-4">
-            <h2>Courses</h2>
-            <card-list cards="labels.courses.cards"></card-list>
-        </div>
-        <div class="col-md-4">
-            <h2>Gatherings</h2>
-            <card-list cards="labels.gatherings.cards"></card-list>
-        </div>
-    </div>
-</div>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha256-7s5uDGW3AHqw6xtJmNNtr+OBRJUlgkNJEo78P4b0yRw= sha512-nNo+yCHEyn0smMxSswnf/OnX6/KwJuZTlNZBjauKhTK0c+zT+q5JOCx0UFhXQ6rJR9jg6Es8gPuD2uZcYDLqSw=="
-      crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="https://api.trello.com/1/client.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
+<form id="unlock_form" method="post" action="$PORTAL_ACTION$">
+    <input name="redirurl" type="hidden" value="http://insider.hackafe.org/">
+    <input name="accept" type="hidden" value="1">
+</form>
 <script>
-    (function () {
-        angular.module('app', [])
-                .run(function () {
-                    document.styleSheets[0].disabled = true;
-                })
-                .filter('fromNow', function () {
-                    return function (date) {
-                        return date ? moment(date).fromNow() : date;
-                    }
-                })
-                .controller('MainController', function ($scope, $timeout) {
-                    Trello.get('/boards/GHda069L/cards/open', function (cards) {
-                        $timeout(function () {
-                            var labels = {};
-                            cards.forEach(function (card) {
-                                if (new Date(card.due).getTime() < Date.now()) return;
-                                card.labels.forEach(function (label) {
-                                    labels[label.id] = labels[label.id] || label;
-                                    labels[label.id].cards = labels[label.id].cards || [];
-                                    labels[label.id].cards.push(card);
-                                });
-                            });
-                            $scope.labels = {
-                                // IT events
-                                events: {name: "Events", cards: labels['54648a0274d650d567a72353'].cards},
-                                // IT courses
-                                courses: {name: "Courses", cards: labels['54648a0274d650d567a72355'].cards},
-                                // IT gatherings
-                                gatherings: {name: "Gatherings", cards: labels['565af8f0fb396fe706bec112'].cards},
-                            }
-                        });
-                    }, function (error) {
-                        console.error(error);
-                    });
-                })
-                .directive('cardList', function () {
-                    return {
-                        limit: 'AE',
-                        scope: {
-                            cards: "="
-                        },
-                        controller: function ($scope, $timeout) {
-                            $scope.cardOrder = function (card) {
-                                return new Date(card.due).getTime();
-                            };
-                            $scope.coverImage = function (card) {
-                                card.coverImage = card.coverImage || {};
-                                if (!card.idAttachmentCover) return card.coverImage;
-                                if (card.coverImage.promise) return card.coverImage;
-                                card.coverImage.promise = Trello.get('/cards/' + card.id + "/attachments/" + card.idAttachmentCover, function (attachment) {
-                                    $timeout(function () {
-                                        card.coverImage.url = attachment.url;
-                                    });
-                                }, function (error) {
-                                    console.error(error);
-                                });
-                                return card.coverImage;
-                            };
-                            $scope.getFb = function (card) {
-                                card.fb = card.fb || {};
-                                if (card.fb.processed) return card.fb;
-                                card.fb.match = card.desc ? card.desc.match(/((https?:)?\/\/(www.)?facebook.com\/events\/\d+)/i) : null;
-                                if (card.fb.match)
-                                    card.fb.url = card.fb.match[0];
-                                card.fb.processed = true;
-                                return card.fb;
-                            };
-                        },
-                        templateUrl: "eventList"
-                    }
-                })
-        ;
-    })();
-</script>
-<script type="text/ng-template" id="eventList">
-    <ul class="list-unstyled">
-        <li ng-repeat="card in cards | orderBy:cardOrder | limitTo: 3"
-            title="{{card.desc}}"
-            class="thumbnail">
-            <img ng-src="{{coverImage(card).url}}">
-
-            <div class="caption">
-                <h3>{{card.name}}</h3>
-                <h5>{{card.due | fromNow}}</h5>
-
-                <p><a ng-if="getFb(card).url" href="{{getFb(card).url}}" target="_blank" class="btn btn-primary"
-                      role="button">FB</a>
-                </p>
-            </div>
-        </li>
-    </ul>
+    document.forms[0].submit();
 </script>
 
 </body>
